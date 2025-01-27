@@ -69,6 +69,10 @@ class HalfCircleClipper extends CustomClipper<Path> {
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) => true;
 }
 
+extension on VoidCallback {
+  Future<void> delayed(Duration duration) => Future.delayed(duration, this);
+}
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -106,11 +110,11 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 1), () {
-      _counterClockwiseRotationController
-        ..reset()
-        ..forward();
-    });
+    _counterClockwiseRotationController
+      ..reset()
+      ..forward.delayed(
+        const Duration(seconds: 1),
+      );
 
     return Scaffold(
       body: SafeArea(
